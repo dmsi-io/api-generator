@@ -1,0 +1,21 @@
+{
+	"response": {
+		"EcomBranchListResponse": {
+			"dsEcomBranchList": {
+				"dtEcomBranch": [
+					{
+						"branchID": "AL",
+						"profName": "Prof. Adam",
+						"companyName": "Adam's Lehechkas",
+						"branchGUID": "981718d3-dd1f-4dfe-b8db-1d37dabde25d"
+					}
+				]
+			}
+		},
+		"returnCode": 2,
+		"messageNum": 1234,
+		"decimalValue": 1234.56,
+		"booleanValue": true,
+		"messageText": "This is an error message (#1234)"
+	}
+}
