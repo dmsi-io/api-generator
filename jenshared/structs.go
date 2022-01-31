@@ -7,8 +7,9 @@ import (
 )
 
 type StructItem struct {
-	Name string
-	Type string
+	JSONName string
+	Name     string
+	Type     string
 }
 
 type StructItems []StructItem
@@ -43,5 +44,10 @@ func CreateStructItems(items StructItems) []jen.Code {
 }
 
 func CreateStructItem(item StructItem) jen.Code {
-	return jen.Id(strings.Title(item.Name)).Id(item.Type).Tag(map[string]string{"json": item.Name})
+	s := jen.Id(strings.Title(item.Name)).Id(item.Type)
+
+	if item.JSONName != "" {
+		s.Tag(map[string]string{"json": item.JSONName})
+	}
+	return s
 }

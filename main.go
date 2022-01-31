@@ -18,6 +18,7 @@ func main() {
 	f := NewFile(packageName)
 
 	jenshared.AddStructsFromJSON(f, m)
+	jenshared.GenerateJSONAPIInterfaceFunctions(f, m["jsonapi"].([]interface{}))
 
 	err = utils.CreateFilePath(packageName)
 	utils.Check(err)

@@ -9,44 +9,64 @@ import (
 
 // AddStructsFromJSON appends new Structs to the provided file from provided JSON
 func AddStructsFromJSON(f *jen.File, m map[string]interface{}) {
-	f.Add(CreateStructsFromJSON(m))
+	structItemMap := CreateStructItemMapFromJSON(m)
+	AddStructs(f, structItemMap)
 }
 
-// CreateStructsFromJSON generates structs from provided JSON
-func CreateStructsFromJSON(m map[string]interface{}) *jen.Statement {
-	parseMap(m, make(StructItemMap))
-	return nil
+// CreateStructItemMapFromJSON generates StructItemMap from provided JSON
+func CreateStructItemMapFromJSON(m map[string]interface{}) StructItemMap {
+	methodName := m["method"].(string)
+	response := m["response"].(map[string]interface{})
+	bodyResponseName := fmt.Sprintf("%sBodyResponse", methodName)
+
+	structItemMap := parseMap(response, bodyResponseName, make(StructItemMap))
+
+	structItemMap[fmt.Sprintf("%sRootResponse", methodName)] = StructItems{{Name: bodyResponseName, Type: bodyResponseName, JSONName: "response"}}
+
+	return structItemMap
 }
 
-func parseMap(aMap map[string]interface{}, items StructItemMap) (string, StructItemMap) {
+func parseMap(aMap map[string]interface{}, parent string, items StructItemMap) StructItemMap {
 	for key, val := range aMap {
+		title := strings.Title(key)
 		switch concreteVal := val.(type) {
 		case map[string]interface{}:
-			parseMap(val.(map[string]interface{}), items)
+			items[title] = make(StructItems, 0)
+			items[parent] = append(items[parent], StructItem{JSONName: key, Name: title, Type: title})
+			parseMap(val.(map[string]interface{}), title, items)
 		case []interface{}:
-			fmt.Println(key)
-			parseArray(val.([]interface{}), items)
+			items[parent] = append(items[parent], StructItem{JSONName: key, Name: title, Type: fmt.Sprintf("[]%s", title)})
+			parseFirstIndexArray(val.([]interface{}), title, items)
 		default:
-			fmt.Println(key, ":", inferDataType(concreteVal))
+			items[parent] = append(items[parent], StructItem{JSONName: key, Name: title, Type: inferDataType(concreteVal)})
 		}
 	}
-	return "", items
+	return items
 }
 
-func parseArray(anArray []interface{}, items StructItemMap) (string, StructItemMap) {
-	for i, val := range anArray {
+func parseFirstIndexArray(anArray []interface{}, parent string, items StructItemMap) StructItemMap {
+	if len(anArray) > 0 {
+		i := 0
+		val := anArray[i]
 		switch concreteVal := val.(type) {
 		case map[string]interface{}:
-			fmt.Println("Index:", i)
-			parseMap(val.(map[string]interface{}), items)
+			parseMap(val.(map[string]interface{}), parent, items)
 		case []interface{}:
-			fmt.Println("Index:", i)
-			parseArray(val.([]interface{}), items)
+			innerParent := fmt.Sprintf("Inner%s", parent)
+			items[parent] = append(items[parent], StructItem{Name: innerParent, Type: fmt.Sprintf("[]%s", strings.Title(innerParent))})
+			parseFirstIndexArray(val.([]interface{}), innerParent, items)
 		default:
-			fmt.Println("Index", i, ":", inferDataType(concreteVal))
+			delete(items, parent)
+			for key, itemArray := range items {
+				for ii, item := range itemArray {
+					if strings.Title(item.Name) == parent && item.Type == fmt.Sprintf("[]%s", parent) {
+						items[key][ii].Type = fmt.Sprintf("[]%s", inferDataType(concreteVal))
+					}
+				}
+			}
 		}
 	}
-	return "", items
+	return items
 }
 
 func inferDataType(value interface{}) string {

@@ -1,4 +1,6 @@
 {
+	"method": "EcomBranch",
+	"jsonapi": ["dtEcomBranch"],
 	"response": {
 		"EcomBranchListResponse": {
 			"dsEcomBranchList": {
@@ -9,7 +11,10 @@
 						"companyName": "Adam's Lehechkas",
 						"branchGUID": "981718d3-dd1f-4dfe-b8db-1d37dabde25d"
 					}
-				]
+				],
+				"testingArrayOfArrays": [[{ "item1": 2, "item2": "thing" }]],
+				"superNested": [[[2, 3, 4]]],
+				"testingArrayOfStrings": ["thing1", "thing2"]
 			}
 		},
 		"returnCode": 2,
