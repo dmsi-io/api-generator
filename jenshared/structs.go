@@ -1,8 +1,10 @@
 package jenshared
 
 import (
+	"fmt"
 	"strings"
 
+	"github.com/alehechka/api-generator/utils"
 	"github.com/dave/jennifer/jen"
 )
 
@@ -15,6 +17,22 @@ type StructItem struct {
 type StructItems []StructItem
 
 type StructItemMap map[string]StructItems
+
+func CreateStructs(packageName, fileName string) {
+	m, err := utils.OpenJSONFile(fmt.Sprintf("%s.json", fileName))
+	utils.Check(err)
+
+	f := jen.NewFile(packageName)
+
+	AddStructsFromJSON(f, m)
+	GenerateJSONAPIInterfaceFunctions(f, m["jsonapi"].([]interface{}))
+
+	err = utils.CreateFilePath(packageName)
+	utils.Check(err)
+
+	err = f.Save(fmt.Sprintf("%s/%s.go", packageName, fileName))
+	utils.Check(err)
+}
 
 func AddStructs(f *jen.File, itemMap StructItemMap) {
 	for name, items := range itemMap {
