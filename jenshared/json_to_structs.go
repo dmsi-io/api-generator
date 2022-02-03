@@ -17,11 +17,12 @@ func AddStructsFromJSON(f *jen.File, m map[string]interface{}) {
 func CreateStructItemMapFromJSON(m map[string]interface{}) StructItemMap {
 	methodName := m["method"].(string)
 	response := m["response"].(map[string]interface{})
-	bodyResponseName := fmt.Sprintf("%sBodyResponse", methodName)
+	bodyResponseName := createBodyResponse(methodName)
+	rootResponseName := createRootResponse(methodName)
 
 	structItemMap := parseMap(response, bodyResponseName, make(StructItemMap))
 
-	structItemMap[fmt.Sprintf("%sRootResponse", methodName)] = StructItems{{Name: bodyResponseName, Type: bodyResponseName, JSONName: "response"}}
+	structItemMap[rootResponseName] = StructItems{{Name: "Response", Type: bodyResponseName, JSONName: "response"}}
 
 	return structItemMap
 }
@@ -76,4 +77,16 @@ func inferDataType(value interface{}) string {
 	}
 
 	return dataType
+}
+
+func createRootResponse(method string) string {
+	return fmt.Sprintf("%sRootResponse", method)
+}
+
+func createBodyResponse(method string) string {
+	return fmt.Sprintf("%sBodyResponse", method)
+}
+
+func createEndpoint(method string) string {
+	return fmt.Sprintf("%sEndpoint", method)
 }

@@ -10,5 +10,12 @@ func main() {
 	packageName := os.Args[1]
 	fileName := os.Args[2]
 
-	jenshared.CreateStructs(packageName, fileName)
+	var page bool
+	if len(os.Args) > 3 {
+		page = os.Args[3] == "true"
+	}
+
+	m := jenshared.CreateStructs(packageName, fileName)
+
+	jenshared.CreateJSONAPIEndpoint(packageName, fileName, m, page)
 }

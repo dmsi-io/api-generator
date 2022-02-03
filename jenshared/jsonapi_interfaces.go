@@ -50,7 +50,7 @@ func generateLinksFunc(structName string) *jen.Statement {
 
 	c := jen.Func().Params(
 		jen.Id("d").Id(strings.Title(structName)),
-	).Id("Links").Params().Qual("github.com/dmsi-io/jsonapi", "Links").Block(jen.Return(jen.Qual("github.com/dmsi-io/jsonapi", "Links").Block()))
+	).Id("Links").Params().Qual("github.com/dmsi-io/go-utils/jsonapi", "Links").Block(jen.Return(jen.Qual("github.com/dmsi-io/go-utils/jsonapi", "Links").Block()))
 
 	return c
 }
@@ -59,7 +59,7 @@ func generateRelationshipsFunc(structName string) *jen.Statement {
 
 	c := jen.Func().Params(
 		jen.Id("d").Id(strings.Title(structName)),
-	).Id("Relationships").Params().Map(jen.String()).Qual("github.com/dmsi-io/jsonapi", "Relationships").Block(jen.Return(jen.Nil()))
+	).Id("Relationships").Params().Map(jen.String()).Qual("github.com/dmsi-io/go-utils/jsonapi", "Relationship").Block(jen.Return(jen.Nil()))
 
 	return c
 }

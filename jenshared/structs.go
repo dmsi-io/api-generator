@@ -18,7 +18,7 @@ type StructItems []StructItem
 
 type StructItemMap map[string]StructItems
 
-func CreateStructs(packageName, fileName string) {
+func CreateStructs(packageName, fileName string) map[string]interface{} {
 	m, err := utils.OpenJSONFile(fmt.Sprintf("%s.json", fileName))
 	utils.Check(err)
 
@@ -30,13 +30,16 @@ func CreateStructs(packageName, fileName string) {
 	err = utils.CreateFilePath(packageName)
 	utils.Check(err)
 
-	err = f.Save(fmt.Sprintf("%s/%s.go", packageName, fileName))
+	err = f.Save(fmt.Sprintf("%s/%s_structs.go", packageName, fileName))
 	utils.Check(err)
+
+	return m
 }
 
 func AddStructs(f *jen.File, itemMap StructItemMap) {
 	for name, items := range itemMap {
 		f.Add(CreateStruct(name, items))
+		f.Line()
 	}
 }
 

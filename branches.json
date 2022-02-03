@@ -1,6 +1,7 @@
 {
 	"method": "EcomBranch",
 	"jsonapi": ["dtEcomBranch"],
+	"endpoint": "AgilityEcommerce/rest/AgilityEcommerce/BranchList",
 	"response": {
 		"EcomBranchListResponse": {
 			"dsEcomBranchList": {
@@ -21,6 +22,8 @@
 		"messageNum": 1234,
 		"decimalValue": 1234.56,
 		"booleanValue": true,
-		"messageText": "This is an error message (#1234)"
+		"messageText": "This is an error message (#1234)",
+		"moreResultsAvailable": true,
+		"nextChunkStartPointer": 10
 	}
 }
