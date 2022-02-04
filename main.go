@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 
-	"github.com/alehechka/api-generator/jenshared"
+	"github.com/dmsi-io/api-generator/jenshared"
 )
 
 func main() {

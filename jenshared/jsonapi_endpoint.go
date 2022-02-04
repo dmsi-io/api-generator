@@ -3,8 +3,8 @@ package jenshared
 import (
 	"fmt"
 
-	"github.com/alehechka/api-generator/utils"
 	"github.com/dave/jennifer/jen"
+	"github.com/dmsi-io/api-generator/utils"
 )
 
 // CreateJSONAPIEndpoint creates JSONAPI endpoint function

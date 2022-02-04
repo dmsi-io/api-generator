@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/alehechka/api-generator/utils"
 	. "github.com/dave/jennifer/jen"
+	"github.com/dmsi-io/api-generator/utils"
 )
 
 func TestAddStruct(t *testing.T) {

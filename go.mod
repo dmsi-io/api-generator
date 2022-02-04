@@ -1,4 +1,4 @@
-module github.com/alehechka/api-generator
+module github.com/dmsi-io/api-generator
 
 go 1.17
 

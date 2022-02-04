@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/alehechka/api-generator/utils"
 	"github.com/dave/jennifer/jen"
+	"github.com/dmsi-io/api-generator/utils"
 )
 
 type StructItem struct {
