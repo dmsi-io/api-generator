@@ -101,9 +101,9 @@ func addEmptyRequestBody() *jen.Statement {
 
 func addPaginationRequestBody() *jen.Statement {
 	return jen.Id("httpRequest").Dot("RequestBody").Op("=").Map(jen.String()).Interface().Block(
-		jen.Id("ApplyDataChunking").Op(":").Id("applyDataChunking").Op(","),
-		jen.Id("ChunkStartPointer").Op(":").Id("chunkStartPointer").Op(","),
-		jen.Id("RecordFetchLimit").Op(":").Id("recordFetchLimit").Op(","),
+		jen.Qual("github.com/dmsi-io/go-utils/jsonapi", "ApplyDataChunking").Op(":").Id("applyDataChunking").Op(","),
+		jen.Qual("github.com/dmsi-io/go-utils/jsonapi", "ChunkStartPointer").Op(":").Id("chunkStartPointer").Op(","),
+		jen.Qual("github.com/dmsi-io/go-utils/jsonapi", "RecordFetchLimit").Op(":").Id("recordFetchLimit").Op(","),
 	)
 }
 

@@ -21,10 +21,8 @@ github.com/dmsi-io/go-http v1.3.5 h1:BKidxQ2R5Y1M53BLsOmuzr0bX0hEuGuhDjwNWFajUh4
 github.com/dmsi-io/go-http v1.3.5/go.mod h1:SPO5gnMY1lADEoZktQS8jXtodTJq32KCbJm45BM06wc=
 github.com/dmsi-io/go-logger v1.0.1 h1:NPGlzQT1PUKr9mQBGMc2x3PJszKo6SSvninX+GMdYic=
 github.com/dmsi-io/go-logger v1.0.1/go.mod h1:iYEWe654fphmYDRp1BGBWVrKu2naPD6IM7RHxJLjBQw=
-github.com/dmsi-io/go-utils v1.4.2 h1:i6lNXGHNoYmbn5fBqh0ieXkYSyQWJixlyMxizXmEt1c=
-github.com/dmsi-io/go-utils v1.4.2/go.mod h1:BDQ2iOQwi6JWGwimhVmTtuLXe/kRNnkG0CBrO4Fx02I=
-github.com/dmsi-io/go-utils v1.4.3-0.20220202202044-f9055529cdfe h1:J18O1H72anrhVGouKtDHPukyUsniXwxcAw59vKCaMJg=
-github.com/dmsi-io/go-utils v1.4.3-0.20220202202044-f9055529cdfe/go.mod h1:BDQ2iOQwi6JWGwimhVmTtuLXe/kRNnkG0CBrO4Fx02I=
+github.com/dmsi-io/go-utils v1.5.1 h1:dMyNu5K8/ROFPDSAQ7mT/MpTuC0ZA44bKr+UBS2Ndp0=
+github.com/dmsi-io/go-utils v1.5.1/go.mod h1:BDQ2iOQwi6JWGwimhVmTtuLXe/kRNnkG0CBrO4Fx02I=
 github.com/fsnotify/fsnotify v1.4.7/go.mod h1:jwhsz4b93w/PPRr/qN1Yymfu8t87LnFCMoQvtojpjFo=
 github.com/fsnotify/fsnotify v1.4.9 h1:hsms1Qyu0jgnwNXIxa+/V/PDsU6CfLf6CNO8H7IWoS4=
 github.com/fsnotify/fsnotify v1.4.9/go.mod h1:znqG4EE+3YCdAaPaxE2ZRY/06pZUdp0tY4IgpuI1SZQ=

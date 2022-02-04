@@ -4,6 +4,7 @@ go 1.17
 
 require (
 	github.com/dave/jennifer v1.5.0
+	github.com/dmsi-io/go-utils v1.5.1
 	github.com/gin-gonic/gin v1.7.7
 )
 
@@ -13,7 +14,6 @@ require (
 	github.com/dmsi-io/go-cache v1.0.1 // indirect
 	github.com/dmsi-io/go-http v1.3.5 // indirect
 	github.com/dmsi-io/go-logger v1.0.1 // indirect
-	github.com/dmsi-io/go-utils v1.4.3-0.20220202202044-f9055529cdfe
 	github.com/gin-contrib/cors v1.3.1 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-playground/locales v0.13.0 // indirect
