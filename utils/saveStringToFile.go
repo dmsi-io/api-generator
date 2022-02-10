@@ -14,7 +14,7 @@ func CreateFilePath(filePath string) error {
 	for _, part := range pathParts {
 		pathBuilder = pathBuilder + part + "/"
 		if _, err := os.Stat(pathBuilder); os.IsNotExist(err) {
-			if err := os.Mkdir(pathBuilder, fs.ModeAppend); err != nil {
+			if err := os.Mkdir(pathBuilder, fs.ModeAppend|0755); err != nil {
 				return err
 			}
 		}
