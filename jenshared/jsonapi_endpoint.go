@@ -8,11 +8,9 @@ import (
 )
 
 // CreateJSONAPIEndpoint creates JSONAPI endpoint function
-func CreateJSONAPIEndpoint(packageName, fileName string, m map[string]interface{}, pagination bool) {
+func CreateJSONAPIEndpoint(packageName, fileName string, m map[string]interface{}, method, endpoint, topLevelObject string, pagination bool) {
 
-	method := m["method"].(string)
-	rootResponse := createRootResponse(method)
-	endpoint := m["endpoint"].(string)
+	rootResponse := createRootResponse(method, topLevelObject)
 	endpointVar := createEndpoint(method)
 
 	f := jen.NewFile(packageName)

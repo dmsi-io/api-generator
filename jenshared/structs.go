@@ -18,22 +18,18 @@ type StructItems []StructItem
 
 type StructItemMap map[string]StructItems
 
-func CreateStructs(packageName, fileName string) map[string]interface{} {
-	m, err := utils.OpenJSONFile(fmt.Sprintf("%s.json", fileName))
-	utils.Check(err)
+func CreateStructs(jsonMap map[string]interface{}, packageName, fileName, methodName, topLevelObject, jsonapiStructs string) {
 
 	f := jen.NewFile(packageName)
 
-	AddStructsFromJSON(f, m)
-	GenerateJSONAPIInterfaceFunctions(f, m["jsonapi"].([]interface{}))
+	AddStructsFromJSON(f, jsonMap, methodName, topLevelObject)
+	GenerateJSONAPIInterfaceFunctions(f, strings.Split(jsonapiStructs, ","))
 
-	err = utils.CreateFilePath(packageName)
+	err := utils.CreateFilePath(packageName)
 	utils.Check(err)
 
 	err = f.Save(fmt.Sprintf("%s/%s_structs.go", packageName, fileName))
 	utils.Check(err)
-
-	return m
 }
 
 func AddStructs(f *jen.File, itemMap StructItemMap) {

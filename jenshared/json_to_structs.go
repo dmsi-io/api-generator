@@ -8,21 +8,25 @@ import (
 )
 
 // AddStructsFromJSON appends new Structs to the provided file from provided JSON
-func AddStructsFromJSON(f *jen.File, m map[string]interface{}) {
-	structItemMap := CreateStructItemMapFromJSON(m)
+func AddStructsFromJSON(f *jen.File, m map[string]interface{}, methodName, topLevelObject string) {
+	structItemMap := CreateStructItemMapFromJSON(m, methodName, topLevelObject)
 	AddStructs(f, structItemMap)
 }
 
 // CreateStructItemMapFromJSON generates StructItemMap from provided JSON
-func CreateStructItemMapFromJSON(m map[string]interface{}) StructItemMap {
-	methodName := m["method"].(string)
-	response := m["response"].(map[string]interface{})
-	bodyResponseName := createBodyResponse(methodName)
-	rootResponseName := createRootResponse(methodName)
+func CreateStructItemMapFromJSON(m map[string]interface{}, methodName, topLevelObject string) StructItemMap {
+	response, ok := m[topLevelObject].(map[string]interface{})
+	if !ok {
+		fmt.Printf("Failed to parse JSON from: %s\n", topLevelObject)
+		return StructItemMap{}
+	}
+
+	bodyResponseName := createBodyResponse(methodName, topLevelObject)
+	rootResponseName := createRootResponse(methodName, topLevelObject)
 
 	structItemMap := parseMap(response, bodyResponseName, make(StructItemMap))
 
-	structItemMap[rootResponseName] = StructItems{{Name: "Response", Type: bodyResponseName, JSONName: "response"}}
+	structItemMap[rootResponseName] = StructItems{{Name: strings.Title(topLevelObject), Type: bodyResponseName, JSONName: topLevelObject}}
 
 	return structItemMap
 }
@@ -79,12 +83,12 @@ func inferDataType(value interface{}) string {
 	return dataType
 }
 
-func createRootResponse(method string) string {
-	return fmt.Sprintf("%sRootResponse", method)
+func createRootResponse(method, topLevelObject string) string {
+	return fmt.Sprintf("%sRoot%s", method, strings.Title(topLevelObject))
 }
 
-func createBodyResponse(method string) string {
-	return fmt.Sprintf("%sBodyResponse", method)
+func createBodyResponse(method, topLevelObject string) string {
+	return fmt.Sprintf("%sBody%s", method, strings.Title(topLevelObject))
 }
 
 func createEndpoint(method string) string {

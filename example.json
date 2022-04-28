@@ -1,9 +1,29 @@
 {
-  "method": "User",
-  "jsonapi": ["dtUser"],
-  "endpoint": "Agility/rest/Agility/User",
   "response": {
     "UserListResponse": {
+      "dsUserList": {
+        "dtUser": [
+          {
+            "firstName": "First",
+            "lastName": "Last",
+            "userGUID": "981718d3-dd1f-4dfe-b8db-1d37dabde25d"
+          }
+        ],
+        "testingArrayOfArrays": [[{ "item1": 2, "item2": "thing" }]],
+        "superNested": [[[2, 3, 4]]],
+        "testingArrayOfStrings": ["thing1", "thing2"]
+      }
+    },
+    "returnCode": 2,
+    "messageNum": 1234,
+    "decimalValue": 1234.56,
+    "booleanValue": true,
+    "messageText": "This is an error message (#1234)",
+    "moreResultsAvailable": true,
+    "nextChunkStartPointer": 10
+  },
+  "request": {
+    "UserListRequest": {
       "dsUserList": {
         "dtUser": [
           {

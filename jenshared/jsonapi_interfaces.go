@@ -7,9 +7,11 @@ import (
 )
 
 // GenerateJSONAPIInterfaceFunctions generates jsonapi.Data interface functions
-func GenerateJSONAPIInterfaceFunctions(f *jen.File, structNames []interface{}) {
-	for _, structName := range structNames {
-		name := structName.(string)
+func GenerateJSONAPIInterfaceFunctions(f *jen.File, structNames []string) {
+	for _, name := range structNames {
+		if len(name) == 0 {
+			continue
+		}
 		f.Add(generateIDFunc(name))
 		f.Add(generateTypeFunc(name))
 		f.Add(generateAttributesFunc(name))
