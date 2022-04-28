@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/dave/jennifer/jen"
+	"github.com/dmsi-io/api-generator/cli"
 	"github.com/dmsi-io/api-generator/utils"
 )
 
@@ -18,17 +19,17 @@ type StructItems []StructItem
 
 type StructItemMap map[string]StructItems
 
-func CreateStructs(jsonMap map[string]interface{}, packageName, fileName, methodName, topLevelObject, jsonapiStructs string) {
+func CreateStructs(jsonMap map[string]interface{}, args cli.Arguments) {
 
-	f := jen.NewFile(packageName)
+	f := jen.NewFile(args.PackageName)
 
-	AddStructsFromJSON(f, jsonMap, methodName, topLevelObject)
-	GenerateJSONAPIInterfaceFunctions(f, strings.Split(jsonapiStructs, ","))
+	AddStructsFromJSON(f, jsonMap, args.MethodName, args.TopLevelObject)
+	GenerateJSONAPIInterfaceFunctions(f, args.JsonapiStructs)
 
-	err := utils.CreateFilePath(packageName)
+	err := utils.CreateFilePath(args.PackageName)
 	utils.Check(err)
 
-	err = f.Save(fmt.Sprintf("%s/%s_structs.go", packageName, fileName))
+	err = f.Save(fmt.Sprintf("%s/%s_structs.go", args.PackageName, args.FileName))
 	utils.Check(err)
 }
 
