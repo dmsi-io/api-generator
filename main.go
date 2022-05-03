@@ -1,19 +1,20 @@
 package main
 
 import (
-	"flag"
-
+	"github.com/dmsi-io/api-generator/cli"
 	"github.com/dmsi-io/api-generator/jenshared"
+	"github.com/dmsi-io/api-generator/utils"
 )
 
 func main() {
-	packageName := flag.String("package", "rest", "Package Name: options are rest or gql")
-	fileName := flag.String("file", "", "File Name of JSON object (do not included file extension)")
-	pagination := flag.Bool("pagination", false, "Flag to add pagination params")
-	flag.Parse()
+	args := cli.InitializeCLIArguments()
 
-	if *packageName == "rest" {
-		m := jenshared.CreateStructs(*packageName, *fileName)
-		jenshared.CreateJSONAPIEndpoint(*packageName, *fileName, m, *pagination)
+	m, err := utils.GetJSON(args.FileName)
+	utils.Check(err)
+
+	jenshared.CreateStructs(m, args)
+
+	if args.Rest {
+		jenshared.CreateJSONAPIEndpoint(m, args)
 	}
 }

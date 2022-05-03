@@ -4,25 +4,24 @@ import (
 	"fmt"
 
 	"github.com/dave/jennifer/jen"
+	"github.com/dmsi-io/api-generator/cli"
 	"github.com/dmsi-io/api-generator/utils"
 )
 
 // CreateJSONAPIEndpoint creates JSONAPI endpoint function
-func CreateJSONAPIEndpoint(packageName, fileName string, m map[string]interface{}, pagination bool) {
+func CreateJSONAPIEndpoint(m map[string]interface{}, args cli.Arguments) {
 
-	method := m["method"].(string)
-	rootResponse := createRootResponse(method)
-	endpoint := m["endpoint"].(string)
-	endpointVar := createEndpoint(method)
+	rootResponse := createRootResponse(args.MethodName, args.TopLevelObject)
+	endpointVar := createEndpoint(args.MethodName)
 
-	f := jen.NewFile(packageName)
+	f := jen.NewFile(args.PackageName)
 
-	createJSONAPIEndpoint(f, fileName, rootResponse, endpointVar, endpoint, pagination)
+	createJSONAPIEndpoint(f, args.FileName, rootResponse, endpointVar, args.Endpoint, args.Pagination)
 
-	err := utils.CreateFilePath(packageName)
+	err := utils.CreateFilePath(args.PackageName)
 	utils.Check(err)
 
-	err = f.Save(fmt.Sprintf("%s/%s.go", packageName, fileName))
+	err = f.Save(fmt.Sprintf("%s/%s.go", args.PackageName, args.FileName))
 	utils.Check(err)
 }
 
